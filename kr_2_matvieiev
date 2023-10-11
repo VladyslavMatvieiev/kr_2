@@ -1,0 +1,47 @@
+import scala.util.Random
+
+class Address(private val city: String, private val region: String) {
+  override def toString: String = s"$city, $region"
+}
+
+class Human(private val name: String, private val surname: String, private val age: Int, private val address: Address) {
+  protected val firstName: String = name
+  protected val lastName: String = surname
+  protected val personAge: Int = age
+  protected val homeAddress: Address = address
+
+  override def toString: String = s"Name: $firstName\nSurname: $lastName\nAge: $personAge\nAddress: $homeAddress"
+}
+
+class Student(name: String, surname: String, age: Int, address: Address)
+  extends Human(name, surname, age, address) {
+
+  def printStudentInfo(): Unit = {
+    val studentInfo = toString()
+    println(s"Student Info:\n$studentInfo")
+
+    val random = new Random()
+    val grades = List.fill(5)(random.nextInt(5) + 1)
+
+    val gradesString = s"Grades: ${grades.mkString(", ")}"
+    println(gradesString + "\n")
+  }
+}
+
+class Teacher(name: String, surname: String, age: Int, address: Address)
+  extends Human(name, surname, age, address) {
+
+  def printTeacherInfo(): Unit = {
+    val teacherInfo = toString()
+    println(s"Teacher Info:\n$teacherInfo")
+  }
+}
+
+object Main extends App {
+  val addressHuman = new Address("Kherson", "Kherson Region")
+  val student = new Student("Oleg", "Petrov", age = 21, addressHuman)
+  val teacher = new Teacher("Igor", "Dmitrievich", age = 42, addressHuman)
+
+  student.printStudentInfo()
+  teacher.printTeacherInfo()
+}
